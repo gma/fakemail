@@ -61,7 +61,7 @@ quit();
             $smtp->set_callback(RCPT => \&validate_recipient);
             $smtp->set_callback(DATA => \&queue_message);
             $smtp->process();
-            $socket->close();
+            close_socket($socket);
         }
         close_socket($server);
     }
