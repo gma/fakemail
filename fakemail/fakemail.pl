@@ -59,6 +59,7 @@ exit;
             $socket->close();
             $socket = undef;
         }
+        $server->shutdown();
         $server->close();
     }
 
@@ -86,6 +87,7 @@ exit;
         if (defined($socket)) {
             $socket->close();
         }
+        $server->shutdown();
         $server->close();
         exit;
     }
