@@ -28,8 +28,8 @@ $path =~ s|/$||;
 # Run in background.
 #
 if ($background) {
-    exit if my $parent = fork;
-    die ($!) unless defined ($parent);
+    exit if my $child = fork;
+    die ($!) unless defined ($child);
     POSIX::setsid() or die ('Cannot detach from session: $!');
     print "$$\n";
     $SIG{INT} = $SIG{TERM} = $SIG{HUP} = \&signals;
