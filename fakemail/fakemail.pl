@@ -60,7 +60,6 @@ exit;
             my $smtp = new Net::Server::Mail::SMTP socket => $socket;
             $smtp->set_callback(RCPT => \&validate_recipient);
             $smtp->set_callback(DATA => \&queue_message);
-            $smtp->set_callback(EHLO => \&handle_ehlo);
             $smtp->process();
             $socket->close();
             $socket = undef;
@@ -87,9 +86,6 @@ exit;
             close(FILE);
         }
         return (1, 250, "message queued");
-    }
-
-    sub handle_ehlo {
     }
 
     sub signals {
