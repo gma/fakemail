@@ -1,5 +1,7 @@
 #!/usr/bin/perl
-
+#
+# $Id$
+#
 use Net::Server::Mail::SMTP;
 use IO::Socket::INET;
 use Getopt::Long;
