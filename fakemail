@@ -98,7 +98,7 @@ quit();
         my $socket = shift;
         
         $socket->flush();
-        $socket->shutdown();
+        $socket->shutdown(2);
         $socket->close();
     }
 }
@@ -111,6 +111,7 @@ quit();
     sub get_filename_from_recipient {
         my $recipient = shift;
 
+        $recipient =~ s/<|>//g;
         if (! defined($counts{$recipient})) {
             $counts{$recipient} = 1;
         }
