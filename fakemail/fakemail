@@ -57,7 +57,7 @@ serve();
         message('Starting fakemail');
         $server = new IO::Socket::INET(Listen => 1,
                                        Proto => 'tcp',
-                                       ReuseAddr => 1,
+                                       Reuse => 1,
                                        LocalPort => $port,
                                        LocalHost => $host);
         if (! $server) {
