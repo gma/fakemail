@@ -17,7 +17,7 @@ GetOptions(
         'background'   => \$background);
 
 if (! defined($host) or ! defined($port) or ! defined($path)) {
-    die "Usage: ./fake_mail.pl\n" .
+    die "Usage: ./fakemail.pl\n" .
     "       --host=<localdomain>\n" .
     "       --port=<port number>\n" .
     "       --path=<path to save mails>\n" .
