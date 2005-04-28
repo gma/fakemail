@@ -5,10 +5,18 @@
      *	@version	$Id$
      */
 
-    @define('FAKE_MAIL_SCRIPT', dirname(__FILE__) . '/../fakemail');
-    @define('FAKE_MAIL_PORT', 25);
-    @define('FAKE_MAIL_HOST', 'localhost');
-    @define('FAKE_MAIL_DUMP_PATH', dirname(__FILE__) . '/');
+    if(!defined('FAKE_MAIL_SCRIPT')) {
+        define('FAKE_MAIL_SCRIPT', dirname(__FILE__) . '/../fakemail');
+    }
+    if(!defined('FAKE_MAIL_PORT')) {
+        define('FAKE_MAIL_PORT', 25);
+    }
+    if(!defined('FAKE_MAIL_HOST')) {
+        define('FAKE_MAIL_HOST', 'localhost');
+    }
+    if(!defined('FAKE_MAIL_DUMP_PATH')) {
+        define('FAKE_MAIL_DUMP_PATH', dirname(__FILE__) . '/');
+    }
 
     class FakeMailDaemon {
         var $pid = null;
