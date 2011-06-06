@@ -75,8 +75,11 @@ def handle_signals():
     def signal_handler(signum, frame):
         quit()
 
-    for sig in (signal.SIGINT, signal.SIGTERM, signal.SIGHUP):
-        signal.signal(sig, signal_handler)
+    for sig in ("SIGINT", "SIGTERM", "SIGHUP"):
+        try:
+            signal.signal(getattr(signal, sig), signal_handler)
+        except AttributeError, e:
+            pass
 
 
 def read_command_line():
