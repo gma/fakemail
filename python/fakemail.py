@@ -78,7 +78,7 @@ def handle_signals():
     for sig in ("SIGINT", "SIGTERM", "SIGHUP"):
         try:
             signal.signal(getattr(signal, sig), signal_handler)
-        except AttributeError, e:
+        except AttributeError:
             pass
 
 
@@ -112,19 +112,23 @@ def read_command_line():
 def become_daemon():
     # See "Python Standard Library", pg. 29, O'Reilly, for more
     # info on the following.
-    pid = os.fork()
-    if pid:  # we're the parent if pid is set
-        os._exit(0)
-    os.setpgrp()
-    os.umask(0)
+    try:
+        pid = os.fork()
+    except AttributeError:
+        sys.stderr.write("WARN: --background is unsupported on this platform\n")
+    else:
+        if pid:  # we're the parent if pid is set
+            os._exit(0)
+        os.setpgrp()
+        os.umask(0)
 
-    class DevNull:
-        def write(self, message):
-            pass
+        class DevNull:
+            def write(self, message):
+                pass
 
-    sys.stdin.close()
-    sys.stdout = DevNull()
-    sys.stderr = DevNull()
+        sys.stdin.close()
+        sys.stdout = DevNull()
+        sys.stderr = DevNull()
 
 
 def main():
