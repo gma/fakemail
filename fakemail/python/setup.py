@@ -9,7 +9,7 @@ from distutils.core import *
 setup(name="fakemail-python",
       version="1.0beta",
       author="Graham Ashton",
-      author_email="ashtong@users.sourceforge.net",
+      author_email="graham@effectif.com",
       url="http://fakemail.sourceforge.net/",
       download_url="http://sourceforge.net/project/showfiles.php?group_id=130951&package_id=168675",
       scripts=["fakemail.py"],
