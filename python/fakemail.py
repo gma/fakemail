@@ -37,8 +37,12 @@ class FakeServer(smtpd.SMTPServer):
         message("Incoming mail dispatched")
 
 
+def script_name():
+    return os.path.basename(sys.argv[0])
+
+
 def usage():
-    print "Usage: %s [OPTIONS]" % os.path.basename(sys.argv[0])
+    print "Usage: %s [OPTIONS]" % script_name()
     print """
 OPTIONS
         --host=<localdomain>
@@ -71,22 +75,20 @@ def message(text):
 
 
 def handle_signals():
-
-    def signal_handler(signum, frame):
-        quit()
-
-    for sig in ("SIGINT", "SIGTERM", "SIGHUP"):
+    for name in ("SIGINT", "SIGTERM", "SIGHUP"):
         try:
-            signal.signal(getattr(signal, sig), signal_handler)
-        except AttributeError:
+            sig = getattr(signal, name)
+        except AttributeError:  # SIGHUP not available on some platforms
             pass
+        else:
+            signal.signal(sig, lambda signmum, frame: quit())
 
 
 def read_command_line():
     global log_file
     try:
-        optlist, args = getopt.getopt(sys.argv[1:], "",
-            ["host=", "port=", "path=", "log=", "background"])
+        optlist, args = getopt.getopt(
+            sys.argv[1:], "", ["host=", "port=", "path=", "log=", "background"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -115,7 +117,9 @@ def become_daemon():
     try:
         pid = os.fork()
     except AttributeError:
-        sys.stderr.write("WARN: --background is unsupported on this platform\n")
+        print("INFO: --background is unsupported on this platform")
+        if sys.platform.find("win") >= 0:
+            print("INFO: Start %s with pythonw.exe instead" % script_name())
     else:
         if pid:  # we're the parent if pid is set
             os._exit(0)
