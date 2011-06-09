@@ -7,7 +7,7 @@ from distutils.core import *
 
 
 setup(name="fakemail-python",
-      version="1.0beta",
+      version="1.0",
       author="Graham Ashton",
       author_email="graham@effectif.com",
       url="http://fakemail.sourceforge.net/",
